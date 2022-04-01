@@ -9,3 +9,12 @@
         <title>Document</title>
     </head>
     <body>
+        <nav class="navbar navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="/">Home</a>
+                <a class="navbar-brand" href="/task/add">Add Task</a>
+                <a class="navbar-brand" href="#">Login</a>
+            </div>
+        </nav>
+        <div class="container">
+            <h1 class="text-center my-2">Task Manager</h1>
