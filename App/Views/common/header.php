@@ -13,7 +13,11 @@
             <div class="container">
                 <a class="navbar-brand" href="/">Home</a>
                 <a class="navbar-brand" href="/task/add">Add Task</a>
-                <a class="navbar-brand" href="#">Login</a>
+                <?php if ($data["logged"]): ?>
+                    <a class="navbar-brand" href="/task/logout">Logout</a>
+                <?php else: ?>
+                    <a class="navbar-brand" href="/task/login">Login</a>
+                <?php endif; ?>
             </div>
         </nav>
         <div class="container">
