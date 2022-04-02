@@ -3,31 +3,92 @@
 namespace core;
 
 class Router {
+    
+    private $routes = [];
 
-    public static function run() {
+    private $params = [];
 
-        $path = $_SERVER['REQUEST_URI'];
-        $pathParts = explode('/', $path);
-        $controller = (empty($pathParts[1])) ? 'task' : $pathParts[1];
-        $action = (empty($pathParts[2])) ? 'index' : $pathParts[2];
- 
-        $controller = 'app\controllers\\' . ucfirst($controller) . 'Controller';
-        $action = 'action' . ucfirst($action);
+    public function add($route, $params = []){
 
-        $action = explode('?', $action);
-        $action = $action[0];
+        $route = preg_replace('/\//', '\\/', $route);
+        $route = preg_replace('/\{([a-z]+)\}/', '(?P<\1>[a-z-]+)', $route);
+        $route = preg_replace('/\{([a-z]+):([^\}]+)\}/', '(?P<\1>\2)', $route);
+        $route = '/^' . $route . '$/i';
 
-        if (!class_exists($controller)) {
-            throw new \ErrorException('Controller does not exist');
+        $this->routes[$route] = $params;
+    }
+
+    public function match($url){
+
+        foreach ($this->routes as $route => $params) {
+            if (preg_match($route, $url, $matches)) {
+                foreach ($matches as $key => $match) {
+                    if (is_string($key)) {
+                        $params[$key] = $match;
+                    }
+                }
+
+                $this->params = $params;
+                return true;
+            }
         }
-        
-        $objController = new $controller;
 
-        if (!method_exists($objController, $action)) {
-            throw new \ErrorException('action does not exist');
+        return false;
+    }
+
+    public function dispatch($url){
+
+        $url = $this->getUri($url);
+
+        if ($this->match($url)) {
+
+            $controller = $this->getNamespace() . ucfirst($this->params['controller']) . 'Controller';
+            $action = 'action' . ucfirst($this->params['action']);
+
+            if (class_exists($controller)) {
+                $controller_object = new $controller;
+
+                if (is_callable([$controller_object, $action])) {
+                    unset($this->params['controller']);
+                    unset($this->params['action']);
+                    unset($this->params['namespace']);
+
+                    call_user_func_array([$controller_object, $action], $this->params);
+                } else {
+                    throw new \Exception("Method $action in controller $controller cannot be called directly.");
+                }
+            } else {
+                throw new \Exception("Controller class $controller not found");
+            }
+        } else {
+            throw new \Exception('No route matched.', 404);
+        }
+    }
+
+    private function getUri($url){
+
+        if ($url != '') {
+            $parts = explode('&', $url, 2);
+
+            if (strpos($parts[0], '=') === false) {
+                $url = $parts[0];
+            } else {
+                $url = '';
+            }
         }
 
-        call_user_func_array([$objController, $action], $_GET);
+        return $url;
+    }
+
+    private function getNamespace(){
+
+        $namespace = 'App\Controllers\\';
+
+        if (array_key_exists('namespace', $this->params)) {
+            $namespace .= $this->params['namespace'] . '\\';
+        }
+
+        return $namespace;
     }
 
 }
