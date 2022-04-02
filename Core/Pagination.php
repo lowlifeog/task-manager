@@ -7,9 +7,8 @@ class Pagination {
     private $current_page;
     private $total;
     private $amount;
-    private $index = 'page';
     private $limit = 3;
-    private $max = 3;
+    private $max = 5;
 
     public function __construct($total, $limit, $current_page) {
 
@@ -51,7 +50,7 @@ class Pagination {
             $text = $page;
         }
 
-        return '<li class="page-item"><a class="page-link" href="' . $this->index . $page . '">' . $text . '</a></li>';
+        return '<li class="page-item"><a class="page-link" href="' . $page . '">' . $text . '</a></li>';
     }
 
     private function limits() {
