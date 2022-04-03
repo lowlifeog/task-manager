@@ -6,6 +6,13 @@ use PDO;
 
 class DB {
 
+    private static $connect_settings = [
+        "host" => "host",
+        "dbname" => "db",
+        "user" => "user",
+        "pass" => "pass"
+    ];
+
     public static function connect(){
         $cs = self::$connect_settings;
 
