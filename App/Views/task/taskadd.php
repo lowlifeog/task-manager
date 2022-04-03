@@ -1,4 +1,4 @@
-<?php require_once  ROOT . '/app/views/common/header.php'; ?>
+<?php require_once  ROOT . '/App/Views/common/header.php'; ?>
 <h2 class="my-2">Add Task</h2>
 <?php if ($data['errors']): ?>
     <div class="alert alert-danger" role="alert">
@@ -31,4 +31,4 @@
         <button type="submit" value="Save" class="btn btn-primary" name="submit">Add</button>
     </div>
 </form>
-<?php require_once  ROOT . '/app/views/common/footer.php'; ?>
+<?php require_once  ROOT . '/App/Views/common/footer.php'; ?>

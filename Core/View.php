@@ -6,9 +6,9 @@ use App\Controllers\TaskController;
 
 class View {
 
-    public static function render(string $path, array $data = []) {
+    public static function render($path, $data = []) {
 
-        $file = ROOT . '/app/views/' . $path . '.php';
+        $file = ROOT . '/App/Views/' . $path . '.php';
 
         $data["logged"] = TaskController::isLogged();
 

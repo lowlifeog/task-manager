@@ -1,8 +1,4 @@
-<?php
-
-use App\Controllers\TaskController;
-
- require_once  ROOT . '/app/views/common/header.php'; ?>
+<?php require_once  ROOT . '/App/Views/common/header.php'; ?>
     <h2 class="my-2">Login</h2>
     <?php if ($data['errors']): ?>
     <div class="alert alert-danger" role="alert">
@@ -13,7 +9,7 @@ use App\Controllers\TaskController;
         </ul>
     </div>
     <?php endif; ?>
-    <?php if (TaskController::isLogged()): ?>
+    <?php if ($data['logged']): ?>
         <form action="logout" method="post" enctype="multipart/form-data">
             <div class="form-group my-3">
                 <button type="submit" class="btn btn-primary" value="Logout" name="submit">Logout</button>
@@ -34,4 +30,4 @@ use App\Controllers\TaskController;
             </div>
         </form>
     <?php endif; ?>
-<?php require_once  ROOT . '/app/views/common/footer.php'; ?>
+<?php require_once  ROOT . '/App/Views/common/footer.php'; ?>

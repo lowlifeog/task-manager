@@ -1,4 +1,4 @@
-<?php require_once  ROOT . '/app/views/common/header.php'; ?>
+<?php require_once  ROOT . '/App/Views/common/header.php'; ?>
     <h2 class="my-2">Task List</h2>
     <div class="tasks">
         <?php if ($data['tasks']): ?>
@@ -108,4 +108,4 @@
             <div>No available tasks! <a href="task/add">Add Task!</a></div>
         <?php endif; ?>
     </div>
-<?php require_once  ROOT . '/app/views/common/footer.php'; ?>
+<?php require_once  ROOT . '/App/Views/common/footer.php'; ?>
