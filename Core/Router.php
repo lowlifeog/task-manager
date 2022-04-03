@@ -8,6 +8,11 @@ class Router {
 
     private $params = [];
 
+    public function __construct() {
+        $routesPath = ROOT . '/Core/Routes.php';
+        require_once($routesPath);
+    }
+
     public function add($route, $params = []){
 
         $route = preg_replace('/\//', '\\/', $route);
