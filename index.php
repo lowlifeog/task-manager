@@ -2,6 +2,7 @@
 
 define('ROOT', __DIR__);
 
-require_once 'Core/Autoload.php';
+require_once ROOT . '/Core/Autoload.php';
 
-core\Router::run();
+$router = new core\Router();
+$router->dispatch($_SERVER['QUERY_STRING']);
