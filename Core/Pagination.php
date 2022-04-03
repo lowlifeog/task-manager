@@ -61,6 +61,8 @@ class Pagination {
         if ($start + $this->max > $this->amount) {
             $end = $this->amount;
             $start = $end - $this->max + 1;
+
+            $start = $start > 0 ? $start : 1;
         } else {
             $end = $start + $this->max - 1;
         }
